@@ -1,20 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
+  <meta charset="UTF-8">
   <title>Automatic SMS by Ram</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      padding-top: 50px;
+      padding: 30px 15px;
+      margin: 0;
+      background-color: #f8f8f8;
     }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
     input {
       padding: 12px;
       font-size: 18px;
-      width: 250px;
+      width: 90%;
+      max-width: 300px;
       border-radius: 10px;
       border: 2px solid #aaa;
+      box-sizing: border-box;
     }
+
     button {
       padding: 12px 24px;
       font-size: 18px;
@@ -25,21 +38,30 @@
       cursor: pointer;
       margin-top: 20px;
     }
+
     #output {
       margin-top: 25px;
       font-size: 18px;
+      word-break: break-word;
     }
+
     a {
       text-decoration: none;
       color: #007bff;
       font-weight: bold;
+    }
+
+    @media (max-width: 400px) {
+      h2 {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
   <h2>📩 Automatic SMS By Ram</h2>
-  <p>Type 10-digit mobile number and tap Generate</p>
+  <p>10 अंकों वाला मोबाइल नंबर डालें और Generate पर क्लिक करें</p>
 
   <input type="text" id="number" maxlength="10" placeholder="Enter 10-digit number" autofocus />
 
