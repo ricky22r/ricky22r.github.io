@@ -1,58 +1,87 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Automatic SMS By Ram</title>
+  <title>Automatic SMS By BISHNU</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 30px;
       text-align: center;
-      background-color: #f2f2f2;
+      padding-top: 50px;
     }
-    input, button {
+    input {
+      padding: 12px;
       font-size: 18px;
-      padding: 10px;
-      margin: 10px;
+      width: 250px;
+      border-radius: 10px;
+      border: 2px solid #aaa;
     }
     button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    #result {
-      margin-top: 20px;
+      padding: 12px 24px;
       font-size: 18px;
+      border: none;
+      background-color: #28a745;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #output {
+      margin-top: 25px;
+      font-size: 18px;
+    }
+    a {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>Automatic SMS By Ram</h1>
-  <p>कृपया ग्राहक का मोबाइल नंबर दर्ज करें:</p>
-  <input type="text" id="number" placeholder="उदाहरण: 9876543210" />
+
+  <h2>📩 Automatic SMS By Ram</h2>
+  <p>Type 10-digit mobile number and tap Generate</p>
+
+  <input type="text" id="number" maxlength="10" placeholder="Enter 10-digit number" autofocus />
+
   <br>
-  <button onclick="generate()">Generate</button>
-  <div id="result"></div>
+  <button onclick="generateSMS()">Generate</button>
+
+  <div id="output"></div>
 
   <script>
-    function generate() {
-      const number = document.getElementById("number").value.trim();
-      const result = document.getElementById("result");
+    function generateSMS() {
+      const num = document.getElementById("number").value.trim();
+      const output = document.getElementById("output");
 
-      if (!/^[6-9]\d{9}$/.test(number)) {
-        result.innerHTML = "⚠️ कृपया 10 अंकों का वैध मोबाइल नंबर दर्ज करें (6–9 से शुरू होना चाहिए)।";
+      // ✅ Check: 10 digit number only
+      if (!/^[6-9][0-9]{9}$/.test(num)) {
+        output.innerHTML = `<p style="color:red;">🚫 Enter valid 10-digit mobile number</p>`;
         return;
       }
 
-      const smsLink = `https://www.t2ll.com/smsRedirect.aspx/?phoneNumber=1900&msg=PORT ${number}`;
-      result.innerHTML = `
-        ✅ SMS लिंक तैयार है:<br>
-        <a href="${smsLink}" target="_blank" style="font-weight: bold; color: green;">➡️ Tap to Send SMS</a>
+      // ✅ Create Link
+      const smsLink = `https://www.t2ll.com/smsRedirect.aspx/?phoneNumber=1900&msg=PORT ${num}`;
+
+      // ✅ Show output
+      output.innerHTML = `
+        <p>✅ SMS Link तैयार है:</p>
+        <a href="${smsLink}" target="_blank">📲 Tap to Send SMS</a>
+        <br><br>
+        <button onclick="copyLink('${smsLink}')">📋 Copy Link</button>
+        <p id="copied" style="color:green;"></p>
       `;
     }
+
+    // ✅ Copy to Clipboard
+    function copyLink(link) {
+      navigator.clipboard.writeText(link).then(() => {
+        document.getElementById("copied").innerText = "✅ Link copied to clipboard!";
+      });
+    }
+
+    // ✅ Auto Focus (already works with HTML "autofocus")
+    window.onload = () => document.getElementById("number").focus();
   </script>
+
 </body>
 </html>
