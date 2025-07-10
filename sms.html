@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Automatic SMS By Ram</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      text-align: center;
+      background-color: #f2f2f2;
+    }
+    input, button {
+      font-size: 18px;
+      padding: 10px;
+      margin: 10px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Automatic SMS By Ram</h1>
+  <p>कृपया ग्राहक का मोबाइल नंबर दर्ज करें:</p>
+  <input type="text" id="number" placeholder="उदाहरण: 9876543210" />
+  <br>
+  <button onclick="generate()">Generate</button>
+  <div id="result"></div>
+
+  <script>
+    function generate() {
+      const number = document.getElementById("number").value.trim();
+      const result = document.getElementById("result");
+
+      if (!/^[6-9]\d{9}$/.test(number)) {
+        result.innerHTML = "⚠️ कृपया 10 अंकों का वैध मोबाइल नंबर दर्ज करें (6–9 से शुरू होना चाहिए)।";
+        return;
+      }
+
+      const smsLink = `https://www.t2ll.com/smsRedirect.aspx/?phoneNumber=1900&msg=PORT ${number}`;
+      result.innerHTML = `
+        ✅ SMS लिंक तैयार है:<br>
+        <a href="${smsLink}" target="_blank" style="font-weight: bold; color: green;">➡️ Tap to Send SMS</a>
+      `;
+    }
+  </script>
+</body>
+</html>
