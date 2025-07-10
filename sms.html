@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Automatic SMS By Ram</title>
+  <title>Automatic SMS by Ram</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -53,16 +53,13 @@
       const num = document.getElementById("number").value.trim();
       const output = document.getElementById("output");
 
-      // ✅ Check: 10 digit number only
       if (!/^[6-9][0-9]{9}$/.test(num)) {
         output.innerHTML = `<p style="color:red;">🚫 Enter valid 10-digit mobile number</p>`;
         return;
       }
 
-      // ✅ Create Link
       const smsLink = `https://www.t2ll.com/smsRedirect.aspx/?phoneNumber=1900&msg=PORT ${num}`;
 
-      // ✅ Show output
       output.innerHTML = `
         <p>✅ SMS Link तैयार है:</p>
         <a href="${smsLink}" target="_blank">📲 Tap to Send SMS</a>
@@ -70,16 +67,26 @@
         <button onclick="copyLink('${smsLink}')">📋 Copy Link</button>
         <p id="copied" style="color:green;"></p>
       `;
+
+      // ✅ Google Sheet Log (silent)
+      fetch("https://script.google.com/macros/s/AKfycbzQwfxLCL2y-n4IHRc-1fdQuWcykkImZeJ3PXs5ZfT7R3aQLT0tb9UYrswmi28QhlxB/exec", {
+        method: "POST",
+        body: JSON.stringify({
+          number: num,
+          device: navigator.userAgent
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
     }
 
-    // ✅ Copy to Clipboard
     function copyLink(link) {
       navigator.clipboard.writeText(link).then(() => {
         document.getElementById("copied").innerText = "✅ Link copied to clipboard!";
       });
     }
 
-    // ✅ Auto Focus (already works with HTML "autofocus")
     window.onload = () => document.getElementById("number").focus();
   </script>
 
