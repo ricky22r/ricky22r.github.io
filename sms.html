@@ -1,70 +1,36 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Automatic SMS by Ram</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automatic SMS by Ram 🚀</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
       text-align: center;
-      padding: 30px 15px;
-      margin: 0;
-      background-color: #f8f8f8;
     }
-
-    h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
     input {
-      padding: 12px;
-      font-size: 18px;
-      width: 90%;
-      max-width: 300px;
-      border-radius: 10px;
-      border: 2px solid #aaa;
-      box-sizing: border-box;
+      padding: 10px;
+      font-size: 16px;
+      width: 250px;
     }
-
     button {
-      padding: 12px 24px;
-      font-size: 18px;
-      border: none;
-      background-color: #28a745;
-      color: white;
-      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
       cursor: pointer;
-      margin-top: 20px;
     }
-
     #output {
-      margin-top: 25px;
-      font-size: 18px;
-      word-break: break-word;
-    }
-
-    a {
-      text-decoration: none;
-      color: #007bff;
-      font-weight: bold;
-    }
-
-    @media (max-width: 400px) {
-      h2 {
-        font-size: 20px;
-      }
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
-  <h2>📩 Automatic SMS By Ram</h2>
-  <p>10 अंकों वाला मोबाइल नंबर डालें और Generate पर क्लिक करें</p>
-
-  <input type="text" id="number" maxlength="10" placeholder="Enter 10-digit number" autofocus />
-
+  <h2>📲 Automatic SMS by Ram</h2>
+  <p>Enter 10-digit Mobile Number</p>
+  <input type="text" id="number" maxlength="10" placeholder="e.g. 9876543210">
   <br>
   <button onclick="generateSMS()">Generate</button>
 
@@ -76,41 +42,48 @@
       const output = document.getElementById("output");
 
       if (!/^[6-9][0-9]{9}$/.test(num)) {
-        output.innerHTML = `<p style="color:red;">🚫 Enter valid 10-digit mobile number</p>`;
+        output.innerHTML = `<p style="color:red;">🚫 Please enter a valid 10-digit number</p>`;
         return;
       }
 
       const smsLink = `https://www.t2ll.com/smsRedirect.aspx/?phoneNumber=1900&msg=PORT ${num}`;
-
+      
       output.innerHTML = `
-        <p>✅ SMS Link तैयार है:</p>
-        <a href="${smsLink}" target="_blank">📲 Tap to Send SMS</a>
+        <p>✅ Tap to Send SMS:</p>
+        <a href="${smsLink}" target="_blank">${smsLink}</a>
         <br><br>
         <button onclick="copyLink('${smsLink}')">📋 Copy Link</button>
         <p id="copied" style="color:green;"></p>
       `;
 
-      // ✅ Google Sheet Log (silent)
-      fetch("https://script.google.com/macros/s/AKfycbzQwfxLCL2y-n4IHRc-1fdQuWcykkImZeJ3PXs5ZfT7R3aQLT0tb9UYrswmi28QhlxB/exec", {
-        method: "POST",
-        body: JSON.stringify({
-          number: num,
-          device: navigator.userAgent
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
+      // Log to Google Form
+      logToGoogleForm(num);
     }
 
     function copyLink(link) {
       navigator.clipboard.writeText(link).then(() => {
-        document.getElementById("copied").innerText = "✅ Link copied to clipboard!";
+        document.getElementById("copied").innerText = "✅ Link Copied!";
       });
     }
 
+    function logToGoogleForm(num) {
+      const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSfnt_BWXBWnzPS1O-KP33qTGn2Yz6-iUaUC_zFcEdXZI6DKKQ/formResponse";
+      const formData = new FormData();
+
+      formData.append("entry.1962657376", num); // Mobile Number
+      formData.append("entry.1347237174", navigator.userAgent); // Device Info
+
+      fetch(formURL, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      });
+    }
+
+    // Auto-focus
     window.onload = () => document.getElementById("number").focus();
   </script>
 
 </body>
 </html>
+
