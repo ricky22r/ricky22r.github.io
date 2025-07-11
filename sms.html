@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <title>Automatic SMS by Ram 🚀</title>
@@ -7,7 +7,7 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      background: #f5f5f5;
+      background: #f5f0f1;
       text-align: center;
     }
     input {
@@ -20,6 +20,20 @@
       font-size: 16px;
       margin-top: 10px;
       cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+    }
+    a.send-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #2196F3;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
     }
     #output {
       margin-top: 20px;
@@ -29,10 +43,10 @@
 <body>
 
   <h2>📲 Automatic SMS by Ram</h2>
-  <p>Enter 10-digit Mobile Number</p>
-  <input type="text" id="number" maxlength="10" placeholder="e.g. 9876543210">
+  <p>✅ Enter Mobile Number – नीचे मोबाइल नंबर डालें:</p>
+  <input type="text" id="number" maxlength="10" placeholder="Example: 9876543210">
   <br>
-  <button onclick="generateSMS()">Generate</button>
+  <button onclick="generateSMS()">🔁 Genrate Now</button>
 
   <div id="output"></div>
 
@@ -42,34 +56,32 @@
       const output = document.getElementById("output");
 
       if (!/^[6-9][0-9]{9}$/.test(num)) {
-        output.innerHTML = `<p style="color:red;">🚫 Please enter a valid 10-digit number</p>`;
+        output.innerHTML = `<p style="color:red;">🚫 कृपया मान्य 10 अंकों का मोबाइल नंबर दर्ज करें</p>`;
         return;
       }
 
       const smsLink = `https://www.t2ll.com/smsRedirect.aspx/?phoneNumber=1900&msg=PORT ${num}`;
       
       output.innerHTML = `
-        <p>✅ Tap to Send SMS:</p>
-        <a href="${smsLink}" target="_blank">${smsLink}</a>
+        <p>✅ नीचे Tap करें और SMS भेजें:</p>
+        <a href="${smsLink}" target="_blank" class="send-btn">📤 Tap to Send Now</a>
         <br><br>
-        <button onclick="copyLink('${smsLink}')">📋 Copy Link</button>
+        <button onclick="copyLink('${smsLink}')">📋 Copy Link for Share</button>
         <p id="copied" style="color:green;"></p>
       `;
 
-      // Log to Google Form
       logToGoogleForm(num);
     }
 
     function copyLink(link) {
       navigator.clipboard.writeText(link).then(() => {
-        document.getElementById("copied").innerText = "✅ Link Copied!";
+        document.getElementById("copied").innerText = "✅ लिंक सफलतापूर्वक कॉपी हुआ!";
       });
     }
 
     function logToGoogleForm(num) {
       const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSfnt_BWXBWnzPS1O-KP33qTGn2Yz6-iUaUC_zFcEdXZI6DKKQ/formResponse";
       const formData = new FormData();
-
       formData.append("entry.1962657376", num); // Mobile Number
       formData.append("entry.1347237174", navigator.userAgent); // Device Info
 
@@ -80,10 +92,9 @@
       });
     }
 
-    // Auto-focus
+    // Auto-focus on load
     window.onload = () => document.getElementById("number").focus();
   </script>
 
 </body>
 </html>
-
