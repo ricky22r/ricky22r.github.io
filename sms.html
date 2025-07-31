@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Automatic SMS by Ram 🚀</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ✅ Added line -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -61,22 +61,35 @@
         return;
       }
 
-      const smsLink = `https://www.t2ll.com/smsRedirect.aspx/?phoneNumber=1900&msg=PORT ${num}`;
+      const smsLink = `https://www.t2ll.com/smsRedirect.aspx/?phoneNumber=1900&msg=PORT%20${num}`;
       
       output.innerHTML = `
         <p>✅ नीचे Tap करें और SMS भेजें:</p>
         <a href="${smsLink}" target="_blank" class="send-btn">📤 Tap to Send Now</a>
         <br><br>
-        <button onclick="copyLink('${smsLink}')">📋 Copy Link for Share</button>
+        <button onclick="copyAndShare('${smsLink}')">📋 Copy Link for Share</button>
         <p id="copied" style="color:green;"></p>
       `;
 
       logToGoogleForm(num);
     }
 
-    function copyLink(link) {
+    function copyAndShare(link) {
       navigator.clipboard.writeText(link).then(() => {
         document.getElementById("copied").innerText = "✅ लिंक सफलतापूर्वक कॉपी हुआ!";
+
+        // 👉 Share Dialog (Only if supported)
+        if (navigator.share) {
+          navigator.share({
+            title: 'SMS Link by Ram 🚀',
+            text: 'Click to send SMS:',
+            url: link
+          }).catch((error) => {
+            console.log("Sharing failed:", error);
+          });
+        } else {
+          alert("📢 Sharing not supported on this browser/device.");
+        }
       });
     }
 
